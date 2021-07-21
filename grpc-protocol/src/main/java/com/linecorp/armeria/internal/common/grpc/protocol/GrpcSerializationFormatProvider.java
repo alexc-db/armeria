@@ -1,5 +1,5 @@
 /*
- *  Copyright 2017 LINE Corporation
+ *  Copyright 2021 LINE Corporation
  *
  *  LINE Corporation licenses this file to you under the Apache License,
  *  version 2.0 (the "License"); you may not use this file except in compliance
@@ -14,7 +14,7 @@
  *  under the License.
  */
 
-package com.linecorp.armeria.internal.common.grpc;
+package com.linecorp.armeria.internal.common.grpc.protocol;
 
 import static com.linecorp.armeria.common.MediaType.create;
 
