@@ -64,6 +64,7 @@ class JettyServiceTlsCorruptionTest {
     static final ServerExtension server = new ServerExtension() {
         @Override
         protected void configure(ServerBuilder sb) throws Exception {
+            sb.http(0);
             sb.https(0);
             sb.tlsSelfSigned();
 
@@ -89,7 +90,16 @@ class JettyServiceTlsCorruptionTest {
     };
 
     @ParameterizedTest
-    @CsvSource({ "H1, /without-jetty", "H1, /with-jetty" })
+    @CsvSource({
+            "H1, /without-jetty",
+            "H1, /with-jetty",
+            "H2, /without-jetty",
+            "H2, /with-jetty",
+            "H1C, /without-jetty",
+            "H1C, /with-jetty",
+            "H2C, /without-jetty",
+            "H2C, /with-jetty",
+    })
     void test(SessionProtocol protocol, String path) throws Throwable {
         final int numEventLoops = Flags.numCommonWorkers();
         final ClientFactory clientFactory = ClientFactory.builder()
