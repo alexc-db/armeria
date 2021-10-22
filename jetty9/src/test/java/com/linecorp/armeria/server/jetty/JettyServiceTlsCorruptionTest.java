@@ -76,19 +76,13 @@ class JettyServiceTlsCorruptionTest {
             // Without JettyService
             sb.service("/without-jetty", (ctx, req) -> {
                 final HttpResponseWriter res = HttpResponse.streaming();
-                ctx.blockingTaskExecutor().execute(() -> {
-                    try {
-                        res.write(ResponseHeaders.of(200));
-                        for (int i = 0; i < content.length();) {
-                            final int chunkSize = Math.min(32768, content.length() - i);
-                            res.write(HttpData.wrap(content.array(), i, chunkSize));
-                            i += chunkSize;
-                        }
-                        res.close();
-                    } catch (Throwable cause) {
-                        res.close(cause);
-                    }
-                });
+                res.write(ResponseHeaders.of(200));
+                for (int i = 0; i < content.length();) {
+                    final int chunkSize = Math.min(32768, content.length() - i);
+                    res.write(HttpData.wrap(content.array(), i, chunkSize));
+                    i += chunkSize;
+                }
+                res.close();
                 return res;
             });
         }
